@@ -1,0 +1,86 @@
+en:
+  welcome: "Welcome to Calculator! Enter your name:"
+
+  valid_name: "Make sure to use a valid name"
+
+  hi: "Hi "
+
+  first_num: "What's the first number?"
+
+  second_num: "What's the second number?"
+
+  valid_num: "Hmm... that doesn't look like a valid number"
+
+  choose_op:
+      "What operation would you like to perform?\n
+      1) add\n
+      2) subtract\n
+      3) multiply\n
+      4) divide"
+    
+
+  div_by_zero: "Sorry, dividing by 0 is not allowed"
+
+  new_nums: "Please choose new numbers"
+
+  valid_op: "Must choose 1, 2, 3 or 4"
+
+  two_nums: "the two numbers..."
+
+  result: "The result is "
+
+  again: "Do you want to perform another calculation? (Y to calculate again)"
+
+  buh_bye: "Thank you for using the calculator. Good bye!"
+
+  plus: "Adding"
+
+  minus: "Subtracting"
+
+  times: "Multiplying"
+
+  divide: "Dividing"
+
+
+es:
+  welcome: "¡Bienvenido a Calculadora! Introduzca su nombre:"
+
+  valid_name: "Asegúrate de usar un nombre válido"
+
+  hi: "¡Hola "
+
+  first_num: "¿Cuál es el primer número?"
+
+  second_num: "¿Cuál es el segundo número?"
+
+  valid_num: "Hmm... eso no parece un número válido"
+
+  choose_op:
+      "¿Qué operación le gustaría realizar?\n
+      1) sumar\n
+      2) restar\n
+      3) multiplicar\n
+      4) dividir"
+    
+
+  div_by_zero: "Lo sentimos, no se permite dividir por 0"
+
+  new_nums: "Por favor elige nuevos números"
+
+  valid_op: "Debe elegir 1, 2, 3 o 4"
+
+  two_nums: "los dos numeros..."
+
+  result: "El resultado es "
+
+  again: "¿Desea realizar otro cálculo? (S para calcular de nuevo)"
+
+  buh_bye: "Gracias por usar la calculadora. ¡Adiós!"
+
+  plus: "Sumando"
+
+  minus: "Restando"
+
+  times: "Multiplicando"
+
+  divide: "Dividiendo"
