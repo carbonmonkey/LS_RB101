@@ -2,17 +2,21 @@ require 'yaml'
 MESSAGES = YAML.load_file('calculator_messages.yml')
 LANG = 'en'
 
-def prompt(key, string = '')
-  message = MESSAGES[LANG][key] + string
+def fetch_message(key)
+  MESSAGES[LANG][key]
+end
+
+def prompt(key, post_message = '', pre_message = '')
+  message = pre_message + fetch_message(key) + post_message
   Kernel.puts("=> #{message}")
 end
 
 def integer?(num)
-  num.to_i.to_s == num
+  num.to_i().to_s() == num
 end
 
 def float?(num)
-  num.to_f.to_s == num
+  num.to_f().to_s() == num
 end
 
 def valid_number?(num)
@@ -20,96 +24,76 @@ def valid_number?(num)
 end
 
 def string_to_number(num) # returns either integer or float based on string
-  integer?(num) ? num.to_i : num.to_f
+  integer?(num) ? num.to_i() : num.to_f()
+end
+
+def get_input
+  Kernel.gets().chomp()
+end
+
+def get_name
+  loop do
+    name = get_input()
+
+    if name.empty?()
+      prompt('valid_name')
+    else
+      return(name)
+    end
+  end
+end
+
+def get_numbers
+  numbers = []
+  loop do
+    numbers.empty?() ? prompt('first_num') : prompt('second_num')
+    number = get_input()
+
+    if valid_number?(number)
+      numbers.push(string_to_number(number))
+      return(numbers) if numbers.length() == 2
+    else
+      prompt('valid_num')
+    end
+  end
+end
+
+def choose_operation(second_num)
+  loop do
+    operation = get_input()
+
+    if operation == '4' && second_num.to_f() == 0.0 # if user divides by zero
+      prompt('div_by_zero')
+      prompt('new_nums')
+      return('start over')
+    elsif %w(1 2 3 4).include?(operation)
+      return(operation)
+    else # user doesnt' choose a valid operation
+      prompt('valid_op')
+    end
+  end
 end
 
 def operation_to_message(op)
   message = case op
             when '1'
-              MESSAGES[LANG]['plus']
+              fetch_message('plus')
             when '2'
-              MESSAGES[LANG]['minus']
+              fetch_message('minus')
             when '3'
-              MESSAGES[LANG]['times']
+              fetch_message('times')
             when '4'
-              MESSAGES[LANG]['divide']
+              fetch_message('divide')
             end
 
-  Kernel.puts("=> #{message} #{MESSAGES[LANG]['two_nums']}")
+  prompt('two_nums', '', message)
 
   message
 end
 
-Kernel.system('clear')
-
-prompt('welcome')
-
-name = ''
-loop do
-  name = Kernel.gets().chomp()
-
-  if name.empty?()
-    prompt('valid_name')
-  else
-    break
-  end
-end
-
-prompt('hi', name + '!')
-
-loop do # main loop
-  number1 = ''
-  loop do # get the first number
-    prompt('first_num')
-    number1 = Kernel.gets().chomp()
-
-    if valid_number?(number1)
-      number1 = string_to_number(number1)
-      break
-    else
-      prompt('valid_num')
-    end
-  end
-
-  number2 = ''
-  loop do # get the second number
-    prompt('second_num')
-    number2 = Kernel.gets().chomp()
-
-    if valid_number?(number2)
-      number2 = string_to_number(number2)
-      break
-    else
-      prompt('valid_num')
-    end
-  end
-
-  prompt('choose_op')
-
-  start_over = false
-  operator = ''
-  loop do # choose the operation
-    operator = Kernel.gets().chomp()
-
-    if %w(1 2 3).include?(operator)
-      break
-    elsif operator == '4'
-      break if number2.to_f != 0.0 # breaks if user divides by valid number
-
-      prompt('div_by_zero')
-      prompt('new_nums')
-      start_over = true
-      break
-    else
-      prompt('valid_op')
-    end
-  end
-
-  next if start_over # starts over if user divides by zero
-
-  operation_to_message(operator)
-
-  result = case operator # perform the operation
+def do_the_math(operation, numbers)
+  number1, number2 = numbers
+  result = case operation
            when '1'
              number1 + number2
            when '2'
@@ -120,11 +104,40 @@ loop do # main loop
              number1 / number2.to_f()
            end
 
-  prompt('result', result.to_s)
+  result.to_s()
+end
+
+def go_again?
+  answer = get_input.downcase()
+  answer.start_with?('y', 's')
+end
+
+Kernel.system('clear')
+
+prompt('welcome')
+
+name = get_name()
+
+prompt('hi', name + '!')
+
+loop do # main loop
+  numbers = get_numbers()
+
+  prompt('choose_op')
+
+  operation = choose_operation(numbers.last())
+
+  next if operation == 'start over' # starts over if user divides by zero
+
+  operation_to_message(operation)
+
+  calculation = do_the_math(operation, numbers)
+
+  prompt('result', calculation)
 
   prompt('again')
-  answer = Kernel.gets().chomp()
-  break unless answer.downcase().start_with?('y', 's')
+
+  break unless go_again?()
 
   Kernel.system('clear')
 end

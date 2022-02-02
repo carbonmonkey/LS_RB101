@@ -33,13 +33,13 @@ en:
 
   buh_bye: "Thank you for using the calculator. Good bye!"
 
-  plus: "Adding"
+  plus: "Adding "
 
-  minus: "Subtracting"
+  minus: "Subtracting "
 
-  times: "Multiplying"
+  times: "Multiplying "
 
-  divide: "Dividing"
+  divide: "Dividing "
 
 
 es:
@@ -77,10 +77,10 @@ es:
 
   buh_bye: "Gracias por usar la calculadora. ¡Adiós!"
 
-  plus: "Sumando"
+  plus: "Sumando "
 
-  minus: "Restando"
+  minus: "Restando "
 
-  times: "Multiplicando"
+  times: "Multiplicando "
 
-  divide: "Dividiendo"
+  divide: "Dividiendo "
