@@ -31,6 +31,8 @@ en:
 
   again: "Do you want to perform another calculation? (Y to calculate again)"
 
+  yes_or_no: "Must choose either Y or N"
+
   buh_bye: "Thank you for using the calculator. Good bye!"
 
   plus: "Adding "
@@ -74,6 +76,8 @@ es:
   result: "El resultado es "
 
   again: "¿Desea realizar otro cálculo? (S para calcular de nuevo)"
+
+  yes_or_no: "Debe elegir S o N"
 
   buh_bye: "Gracias por usar la calculadora. ¡Adiós!"
 

@@ -8,15 +8,15 @@ end
 
 def prompt(key, post_message = '', pre_message = '')
   message = pre_message + fetch_message(key) + post_message
-  Kernel.puts("=> #{message}")
+  puts("=> #{message}")
 end
 
 def integer?(num)
-  num.to_i().to_s() == num
+  num.to_i.to_s == num
 end
 
 def float?(num)
-  num.to_f().to_s() == num
+  num.to_f.to_s == num
 end
 
 def valid_number?(num)
@@ -24,18 +24,18 @@ def valid_number?(num)
 end
 
 def string_to_number(num) # returns either integer or float based on string
-  integer?(num) ? num.to_i() : num.to_f()
+  integer?(num) ? num.to_i : num.to_f
 end
 
 def get_input
-  Kernel.gets().chomp()
+  gets.chomp
 end
 
 def get_name
   loop do
-    name = get_input()
+    name = get_input
 
-    if name.empty?()
+    if name.empty?
       prompt('valid_name')
     else
       return(name)
@@ -46,12 +46,12 @@ end
 def get_numbers
   numbers = []
   loop do
-    numbers.empty?() ? prompt('first_num') : prompt('second_num')
-    number = get_input()
+    numbers.empty? ? prompt('first_num') : prompt('second_num')
+    number = get_input
 
     if valid_number?(number)
       numbers.push(string_to_number(number))
-      return(numbers) if numbers.length() == 2
+      return(numbers) if numbers.length == 2
     else
       prompt('valid_num')
     end
@@ -60,9 +60,9 @@ end
 
 def choose_operation(second_num)
   loop do
-    operation = get_input()
+    operation = get_input
 
-    if operation == '4' && second_num.to_f() == 0.0 # if user divides by zero
+    if operation == '4' && second_num.to_f == 0.0 # if user divides by zero
       prompt('div_by_zero')
       prompt('new_nums')
       return('start over')
@@ -76,13 +76,13 @@ end
 
 def operation_to_message(op)
   message = case op
-            when '1'
+            when OP[:plus]
               fetch_message('plus')
-            when '2'
+            when OP[:minus]
               fetch_message('minus')
-            when '3'
+            when OP[:times]
               fetch_message('times')
-            when '4'
+            when OP[:divide]
               fetch_message('divide')
             end
 
@@ -94,38 +94,53 @@ end
 def do_the_math(operation, numbers)
   number1, number2 = numbers
   result = case operation
-           when '1'
+           when OP[:plus]
              number1 + number2
-           when '2'
+           when OP[:minus]
              number1 - number2
-           when '3'
+           when OP[:times]
              number1 * number2
-           when '4'
-             number1 / number2.to_f()
+           when OP[:divide]
+             number1 / number2.to_f
            end
 
-  result.to_s()
+  result.to_s
 end
 
 def go_again?
-  answer = get_input.downcase()
-  answer.start_with?('y', 's')
+  loop do
+    answer = get_input.downcase
+    return false if %w(n no).include?(answer)
+    if LANG == 'en'
+      return true if %w(y yes).include?(answer)
+    elsif %w(s si).include?(answer)
+      return true
+    end
+    prompt('yes_or_no')
+  end
 end
 
-Kernel.system('clear')
+OP = {
+  plus: '1',
+  minus: '2',
+  times: '3',
+  divide: '4'
+}
+
+system('clear')
 
 prompt('welcome')
 
-name = get_name()
+name = get_name
 
 prompt('hi', name + '!')
 
 loop do # main loop
-  numbers = get_numbers()
+  numbers = get_numbers
 
   prompt('choose_op')
 
-  operation = choose_operation(numbers.last())
+  operation = choose_operation(numbers.last)
 
   next if operation == 'start over' # starts over if user divides by zero
 
@@ -137,9 +152,9 @@ loop do # main loop
 
   prompt('again')
 
-  break unless go_again?()
+  break unless go_again?
 
-  Kernel.system('clear')
+  system('clear')
 end
 
 prompt('buh_bye')
