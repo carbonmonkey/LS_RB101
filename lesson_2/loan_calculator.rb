@@ -83,7 +83,7 @@ def get_apr # gets the yearly rate, returns as string
   end
 end
 
-def get_years # gets years in duration, returns array
+def get_years # gets years in duration, returns as string
   loop do
     years = gets.chomp
 
@@ -97,7 +97,7 @@ def get_years # gets years in duration, returns array
   end
 end
 
-def get_months
+def get_months # gets months in duration, returns as string
   loop do
     months = gets.chomp
 
@@ -111,7 +111,7 @@ def get_months
   end
 end
 
-def get_duration # gets loan duration, returns array
+def get_duration # gets loan duration, totals months, returns array
   loop do
     prompt('years')
     years = get_years
