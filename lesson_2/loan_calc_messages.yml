@@ -1,0 +1,47 @@
+welcome: 'Welcome to the Loan Calculator!'
+
+info: "Let's start by getting some information about the loan"
+
+amount: 'First, enter the amount of the loan:'
+
+apr: 'Okay, thank you. Now enter the APR%:'
+
+apr_example: 'Example: enter 5.53% as 5.53 or 7% as 7'
+
+duration: 'How long is the duration? First I will ask for the years, then any addional months'
+
+verify: "Okay, let's verify the information you have provided so far:"
+
+correct: 'Does that look correct? (Y or N)'
+
+calculating: 'Okay, calculating the monthly payment'
+
+exit: 'Would you like to exit the calculator? (Y to exit, N for another calculation)'
+
+thank_you: 'Thank you for using the Loan Calculator! :)'
+
+positive: 'Sorry, loan amount must be a positive number'
+
+two_decimals: "If you're including cents, please use two decimal places"
+
+valid_amount: "Sorry, that's not a valid number. Please enter a valid number"
+
+example_amount: 'Example: for $20,000.47 enter 20000.47'
+
+require_positive: 'Must enter a positive number'
+
+valid_apr: 'Please enter valid number. Do not include % or other symbols'
+
+years: 'First, how many years?'
+
+valid_years: 'Sorry, must be a whole number, and cannot be negative'
+
+months: 'Okay great. Next, how many additional months?'
+
+valid_months: 'Please enter a whole number between 0 and 11'
+
+month_or_more: 'Loan duration must be a minimum of 1 month'
+
+restart: "Okay no problem. Let's start over"
+
+y_or_n: 'Please enter Y or N'
