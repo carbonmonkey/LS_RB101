@@ -16,7 +16,7 @@ correct: 'Does that look correct? (Y or N)'
 
 calculating: 'Okay, calculating the monthly payment'
 
-exit: 'Would you like to exit the calculator? (Y to exit, N for another calculation)'
+exit: 'Would you like to do another calculation? (Y for another calculation, N to exit)'
 
 thank_you: 'Thank you for using the Loan Calculator! :)'
 

@@ -6,11 +6,11 @@ def prompt(key)
   puts "=> #{MESSAGES[key]}"
 end
 
-def valid_float?(string) # true if string represents a valid float
+def valid_float?(string)
   string.to_f.to_s == string
 end
 
-def valid_integer?(string) # true if float represesnts a valid integer
+def valid_integer?(string)
   string.to_i.to_s == string
 end
 
@@ -29,7 +29,7 @@ def loose_the_zero(string) # for eliminating a zero in the second decimal place
   penniless_amount.join
 end
 
-def valid_float_with_zero?(string) # validates a float that ends with a zero
+def valid_float_with_zero?(string)
   string.to_f.to_s == loose_the_zero(string)
 end
 
@@ -38,7 +38,7 @@ def good_cents_float?(string) # validates a float
     (valid_float?(string) || valid_float_with_zero?(string))
 end
 
-def add_s(string) # returns an 's' if plural
+def add_s(string)
   string.to_i == 1 ? '' : 's'
 end
 
@@ -46,10 +46,14 @@ def round(number) # rounds to two decimal places
   format('%.2f', number)
 end
 
-def get_loan_amount # gets amount of loan, returns as string
+def get_number
+  gets.chomp.delete(' ').delete('$').delete('%')
+end
+
+def get_loan_amount
   loop do
-    loan_amount = gets.chomp
-    if loan_amount.to_f < 0
+    loan_amount = get_number
+    if loan_amount.to_f <= 0
       prompt('positive')
 
     elsif loan_amount.include?('.')
@@ -66,9 +70,9 @@ def get_loan_amount # gets amount of loan, returns as string
   end
 end
 
-def get_apr # gets the yearly rate, returns as string
+def get_apr
   loop do
-    apr = gets.chomp
+    apr = get_number
 
     if apr.to_f <= 0
       prompt('require_positive')
@@ -83,9 +87,9 @@ def get_apr # gets the yearly rate, returns as string
   end
 end
 
-def get_years # gets years in duration, returns as string
+def get_years
   loop do
-    years = gets.chomp
+    years = get_number
 
     if valid_integer?(years) && years.to_i >= 0
       return years
@@ -97,9 +101,9 @@ def get_years # gets years in duration, returns as string
   end
 end
 
-def get_months # gets months in duration, returns as string
+def get_months
   loop do
-    months = gets.chomp
+    months = get_number
 
     if months.to_i.between?(0, 11) && valid_integer?(months)
       return months
@@ -127,7 +131,7 @@ def get_duration # gets loan duration, totals months, returns array
   end
 end
 
-def display_info(loan_info) # displays loan info from hash
+def display_info(loan_info)
   puts ''
 
   loan_info.each do |key, value|
@@ -137,22 +141,28 @@ def display_info(loan_info) # displays loan info from hash
   puts ''
 end
 
-def yes_or_no # for starting over depending on user response
+def new_calculation?
   loop do
-    yes_or_no = gets.chomp.downcase
+    response = gets.chomp.downcase
 
-    if yes_or_no == 'y' || yes_or_no == 'yes'
+    if response == 'y' || response == 'yes'
       return false
 
-    elsif yes_or_no == 'n' || yes_or_no == 'no'
-      system('clear')
-      prompt('restart')
+    elsif response == 'n' || response == 'no'
       return true
 
     else
       prompt('y_or_n')
 
     end
+  end
+end
+
+def start_over(restart)
+  if restart
+    system('clear')
+    prompt('restart')
+    restart
   end
 end
 
@@ -204,8 +214,7 @@ loop do # main loop
   display_info(loan_info)
   prompt('correct')
 
-  start_over = yes_or_no
-  next if start_over
+  next if start_over(new_calculation?)
 
   # calculate the monthly payment
   prompt('calculating')
@@ -218,8 +227,9 @@ loop do # main loop
   # ask user to exit, or calculate again
   prompt('exit')
 
-  start_over = yes_or_no
-  break unless start_over
+  next if start_over(!new_calculation?)
+
+  break
 end
 
 system('clear')
