@@ -1,0 +1,25 @@
+valid_choices:
+  r: 'rock'
+  p: 'paper'
+  s: 'scissors'
+  l: 'lizard'
+  v: 'spock'
+
+winning_conditions:
+  rock:     ['scissors', 'lizard']
+  paper:    ['rock', 'spock']
+  scissors: ['paper', 'lizard']
+  spock:    ['scissors', 'rock']
+  lizard:   ['spock', 'paper']
+
+verbs:
+  ['rock', 'scissors']:   'crushes'
+  ['rock', 'lizard']:     'crushes'
+  ['paper', 'rock']:      'covers'
+  ['paper', 'spock']:     'disproves'
+  ['scissors', 'paper']:  'cuts'
+  ['scissors', 'lizard']: 'decapitates'
+  ['spock', 'scissors']:  'smashes'
+  ['spock', 'rock']:      'vaporizes'
+  ['lizard', 'spock']:    'poisons'
+  ['lizard', 'paper']:    'eats'

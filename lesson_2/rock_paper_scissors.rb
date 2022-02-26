@@ -1,40 +1,18 @@
-VALID_CHOICES = {
-  'r' => 'rock',
-  'p' => 'paper',
-  's' => 'scissors',
-  'l' => 'lizard',
-  'v' => 'spock'
-}
-
-WINNING_CONDITIONS = {
-  'rock' => %w(scissors lizard),
-  'paper' => %w(rock spock),
-  'scissors' => %w(paper lizard),
-  'spock' => %w(scissors rock),
-  'lizard' => %w(spock paper)
-}
-
-VERBS = {
-  %w(rock scissors) => 'crushes',
-  %w(rock lizard) => 'crushes',
-  %w(paper rock) => 'covers',
-  %w(paper spock) => 'disproves',
-  %w(scissors paper) => 'cuts',
-  %w(scissors lizard) => 'decapitates',
-  %w(spock scissors) => 'smashes',
-  %w(spock rock) => 'vaporizes',
-  %w(lizard spock) => 'poisons',
-  %w(lizard paper) => 'eats'
-}
+require 'yaml'
+COLLECTIONS = YAML.load_file('rock_paper_scissors_collections.yml')
 
 def prompt(message)
   puts "=> #{message}"
 end
 
+def grab(key, subkey = '')
+  subkey.empty? ? COLLECTIONS[key] : COLLECTIONS[key][subkey]
+end
+
 def display_choices
   prompt("Choose one:")
 
-  VALID_CHOICES.each do |key, value|
+  grab('valid_choices').each do |key, value|
     until value.length >= 8
       value += ' '
     end
@@ -47,10 +25,10 @@ def get_choice
   loop do
     choice = gets.chomp.downcase.strip
 
-    if VALID_CHOICES.include?(choice)
-      return VALID_CHOICES[choice]
+    if grab('valid_choices').include?(choice)
+      return grab('valid_choices', choice)
 
-    elsif VALID_CHOICES.values.include?(choice)
+    elsif grab('valid_choices').values.include?(choice)
       return choice
 
     else
@@ -63,7 +41,7 @@ def get_choice
 end
 
 def player_win?(player, computer)
-  WINNING_CONDITIONS[player].include?(computer)
+  grab('winning_conditions', player).include?(computer)
 end
 
 def computer_win?(player, computer)
@@ -71,7 +49,7 @@ def computer_win?(player, computer)
 end
 
 def display_match_results(winner, loser)
-  prompt("#{winner} #{VERBS[[winner, loser]]} #{loser}!")
+  prompt("#{winner} #{grab('verbs', [winner, loser])} #{loser}!")
 end
 
 def display_results(player, computer)
@@ -105,7 +83,7 @@ def display_winner(score)
 end
 
 def display_title
-  puts "#{VALID_CHOICES.values.map(&:capitalize).join(', ')} v1.0"
+  puts "#{grab('valid_choices').values.map(&:capitalize).join(', ')} v1.0"
 end
 
 system('clear')
@@ -139,7 +117,7 @@ loop do # main loop
     display_choices
     choice = get_choice
 
-    computer_choice = VALID_CHOICES.values.sample
+    computer_choice = grab('valid_choices').values.sample
 
     puts ''
     prompt("You chose: #{choice}; Computer chose: #{computer_choice}")
@@ -171,3 +149,4 @@ loop do # main loop
 end
 
 prompt("Thank you for playing. Good bye!")
+puts ''
