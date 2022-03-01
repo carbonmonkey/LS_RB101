@@ -12,12 +12,14 @@ end
 def display_choices
   prompt("Choose one:")
 
-  grab('valid_choices').each do |key, value|
-    until value.length >= 8
-      value += ' '
+  grab(:options).each do |option, sub_hash|
+    until option.length >= 8
+      option += ' '
     end
 
-    prompt("#{value} (or #{key})")
+    prompt("#{option} (or #{sub_hash[:valid_letter]})")
+
+    sleep(0.2)
   end
 end
 
@@ -25,23 +27,18 @@ def get_choice
   loop do
     choice = gets.chomp.downcase.strip
 
-    if grab('valid_choices').include?(choice)
-      return grab('valid_choices', choice)
-
-    elsif grab('valid_choices').values.include?(choice)
-      return choice
-
-    else
-      prompt("That's not a valid choice.")
-      prompt("Please try again. You can optionally enter the first letter "\
-            "of your choice (or v for spock)")
-
+    grab(:options).each do |option, sub_hash|
+      return option if option == choice || sub_hash[:valid_letter] == choice
     end
+
+    prompt("That's not a valid choice.")
+    prompt("Please try again. You can optionally enter the first letter "\
+          "of your choice (or v for spock)")
   end
 end
 
 def player_win?(player, computer)
-  grab('winning_conditions', player).include?(computer)
+  grab(:options, player).values.include?(computer)
 end
 
 def computer_win?(player, computer)
@@ -49,47 +46,70 @@ def computer_win?(player, computer)
 end
 
 def display_match_results(winner, loser)
-  prompt("#{winner} #{grab('verbs', [winner, loser])} #{loser}!")
+  prompt("#{winner} #{grab(:options, winner).key(loser)} #{loser}!")
 end
 
 def display_results(player, computer)
   if player == computer
-    prompt("It's a tie!")
+    prompt("It's a tie!\n\n")
 
   elsif player_win?(player, computer)
     display_match_results(player, computer)
-    prompt("You won!")
+    prompt("You won!\n\n")
 
   else
     display_match_results(computer, player)
-    prompt('Computer won!')
+    prompt("Computer won!\n\n")
 
   end
 end
 
+def score_string(score)
+  "you -> #{score[:player]}, computer -> #{score[:computer]}\n\n"
+end
+
 def display_score(score)
-  prompt("The score is: you -> #{score[:player]},"\
-    " computer -> #{score[:computer]}")
+  prompt("The score is:  #{score_string(score)}")
 end
 
 def display_winner(score)
+  prompt("The final score is: #{score_string(score)}")
+
   if score[:player] > score[:computer]
-    prompt("You are the grand winner!")
+    prompt("You are the grand winner!\n\n")
 
   else
-    prompt("Sorry, computer is the grand winner. Better luck next time.")
+    prompt("Sorry, computer is the grand winner. Better luck next time.\n\n")
 
   end
 end
 
 def display_title
-  puts "#{grab('valid_choices').values.map(&:capitalize).join(', ')} v1.0"
+  puts "#{grab(:options).keys.map(&:capitalize).join(', ')} v1.1\n\n"
+end
+
+def play_again?
+  prompt("Do you want to play again? (y or n)")
+
+  loop do
+    answer = gets.chomp.downcase.strip
+
+    if answer == 'y'
+      return true
+
+    elsif answer == 'n'
+      return false
+
+    else
+      prompt("Please enter 'y' or 'n'")
+
+    end
+  end
 end
 
 system('clear')
 
 display_title
-puts ''
 
 prompt "Press 'ENTER' to play..."
 gets
@@ -104,23 +124,34 @@ loop do # main loop
 
   round = 1
 
-  prompt("First to three wins is the grand winner")
-  puts ''
+  prompt("First to three wins is the grand winner\n\n")
 
   loop do # round loop
-    prompt("Round #{round}")
+    sleep(1)
 
-    puts ''
+    prompt("Round #{round}\n\n")
+
+    sleep(1)
+
     display_score(score)
 
-    puts ''
+    sleep(0.5)
+
     display_choices
     choice = get_choice
 
-    computer_choice = grab('valid_choices').values.sample
+    computer_choice = grab(:options).keys.sample
 
-    puts ''
-    prompt("You chose: #{choice}; Computer chose: #{computer_choice}")
+    system('clear')
+
+    sleep(0.5)
+
+    prompt("You chose: #{choice}")
+    sleep(0.5)
+    prompt("Computer chose: #{computer_choice}\n\n")
+
+    sleep(1)
+
     display_results(choice, computer_choice)
 
     score[:player] += 1 if player_win?(choice, computer_choice)
@@ -129,24 +160,16 @@ loop do # main loop
     break if score[:player] == 3 || score[:computer] == 3
 
     round += 1
-
-    puts ''
-    prompt("Press 'ENTER' to begin round #{round}")
-    gets
-
-    system('clear')
   end
 
-  puts ''
+  sleep(1)
+
   display_winner(score)
 
-  puts ''
-  prompt("Do you want to play again?")
-  answer = gets.chomp
+  sleep(1)
 
-  break unless answer.downcase.start_with?('y')
+  break unless play_again?
   system('clear')
 end
 
-prompt("Thank you for playing. Good bye!")
-puts ''
+prompt("Thank you for playing. Good bye!\n\n")

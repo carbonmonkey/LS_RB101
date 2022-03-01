@@ -1,25 +1,26 @@
-valid_choices:
-  r: 'rock'
-  p: 'paper'
-  s: 'scissors'
-  l: 'lizard'
-  v: 'spock'
-
-winning_conditions:
-  rock:     ['scissors', 'lizard']
-  paper:    ['rock', 'spock']
-  scissors: ['paper', 'lizard']
-  spock:    ['scissors', 'rock']
-  lizard:   ['spock', 'paper']
-
-verbs:
-  ['rock', 'scissors']:   'crushes'
-  ['rock', 'lizard']:     'crushes'
-  ['paper', 'rock']:      'covers'
-  ['paper', 'spock']:     'disproves'
-  ['scissors', 'paper']:  'cuts'
-  ['scissors', 'lizard']: 'decapitates'
-  ['spock', 'scissors']:  'smashes'
-  ['spock', 'rock']:      'vaporizes'
-  ['lizard', 'spock']:    'poisons'
-  ['lizard', 'paper']:    'eats'
+:options: 
+ 
+  rock: 
+    :valid_letter: 'r'
+    crushes:      'scissors'
+    crushes:      'lizard'
+   
+  paper: 
+    :valid_letter: 'p' 
+    covers:        'rock'
+    disproves:     'spock'
+ 
+  scissors:
+    :valid_letter: 's'
+    cuts:          'paper'
+    decapitate:    'lizard' 
+  
+  lizard: 
+    :valid_letter: 'l'
+    poisons:       'spock'
+    eats:          'paper'
+ 
+  spock: 
+    :valid_letter: 'v'
+    smashes:       'scissors'
+    vaporizes:     'rock'
