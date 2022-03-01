@@ -2,8 +2,8 @@
  
   rock: 
     :valid_letter: 'r'
-    crushes:      'scissors'
-    crushes:      'lizard'
+    crushes:       'scissors'
+    crushes:       'lizard'
    
   paper: 
     :valid_letter: 'p' 
