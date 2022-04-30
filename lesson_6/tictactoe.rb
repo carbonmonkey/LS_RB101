@@ -193,7 +193,7 @@ def play_again?
   prompt "Play again? (y or n)"
 
   loop do
-    answer = gets.chomp.downcase
+    answer = gets.chomp.downcase.strip
     break if %w(y n).include? answer
     prompt "Not a valid choice. Please enter y or n."
   end
@@ -201,7 +201,7 @@ def play_again?
   answer == 'y'
 end
 
-score = { player: 0, computer: 0 }
+score = { player: 5, computer: 0 }
 match_num = 1
 
 display_intro_screen
