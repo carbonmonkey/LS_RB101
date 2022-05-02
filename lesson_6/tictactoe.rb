@@ -201,7 +201,7 @@ def play_again?
   answer == 'y'
 end
 
-score = { player: 5, computer: 0 }
+score = { player: 0, computer: 0 }
 match_num = 1
 
 display_intro_screen
