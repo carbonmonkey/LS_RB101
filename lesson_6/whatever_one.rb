@@ -87,8 +87,8 @@ def illustrate_hand(cards, hidden_card = false)
   puts ''
 
   cards.each do |card|
-    suite = card[1][0]
-    print "|__#{suite}| "
+    suit = card[1][0]
+    print "|__#{suit}| "
   end
   puts "\n\n"
 end
